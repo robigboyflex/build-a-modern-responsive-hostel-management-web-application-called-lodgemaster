@@ -1,10 +1,11 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { useCurrentBooking } from "@/lib/hooks";
+import { useCurrentBooking, deadlineFromNow } from "@/lib/hooks";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { AlertTriangle, Wallet } from "lucide-react";
+import { DeadlineCountdown } from "@/components/deadline-countdown";
 
 export const Route = createFileRoute("/_authenticated/payment")({
   head: () => ({ meta: [{ title: "Payment — LodgeMaster" }, { name: "description", content: "Complete your accommodation payment." }] }),
@@ -23,8 +24,13 @@ function Payment() {
     </div>
   );
 
+  const expired = booking.status === "expired";
+
   const markPaid = async () => {
-    const { error } = await supabase.from("bookings").update({ status: "pending_documents" }).eq("id", booking.id);
+    const { error } = await supabase.from("bookings").update({
+      status: "pending_documents",
+      documents_deadline: deadlineFromNow(),
+    }).eq("id", booking.id);
     if (error) return toast.error(error.message);
     toast.success("Marked as paid. Please upload your documents.");
     await reload();
@@ -32,7 +38,9 @@ function Payment() {
   };
 
   const ref = `LM-${booking.id.slice(0, 8).toUpperCase()}`;
-  const deadline = new Date(Date.now() + 7 * 24 * 3600 * 1000).toDateString();
+  const deadlineDisplay = booking.payment_deadline
+    ? new Date(booking.payment_deadline).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" })
+    : "—";
 
   return (
     <div className="space-y-6 max-w-2xl">
@@ -40,6 +48,8 @@ function Payment() {
         <h1 className="text-3xl font-bold">Hostel Payment</h1>
         <p className="text-muted-foreground mt-1">Send payment then confirm below.</p>
       </div>
+
+      <DeadlineCountdown deadline={booking.payment_deadline} label="Payment deadline" />
 
       <Card className="border-border/60">
         <CardHeader><CardTitle className="flex items-center gap-2"><Wallet className="h-5 w-5 text-primary"/>Payment details</CardTitle></CardHeader>
@@ -50,7 +60,7 @@ function Payment() {
           <Row label="Mobile Money Number" value="+233 20 000 0000" />
           <Row label="Reference Number" value={ref} />
           <Row label="Amount to Pay" value={`GHS ${Number(booking.fee ?? 0).toFixed(2)}`} />
-          <Row label="Payment Deadline" value={deadline} />
+          <Row label="Payment Deadline" value={deadlineDisplay} />
         </CardContent>
       </Card>
 
@@ -58,11 +68,15 @@ function Payment() {
         <AlertTriangle className="h-5 w-5 text-warning-foreground shrink-0 mt-0.5" />
         <div>
           <div className="font-semibold text-warning-foreground">Important notice</div>
-          <p className="text-sm text-warning-foreground/90">Please complete payment before uploading your documents.</p>
+          <p className="text-sm text-warning-foreground/90">Complete payment before the deadline or your booking will expire.</p>
         </div>
       </div>
 
-      <Button size="lg" onClick={markPaid}>I Have Made Payment</Button>
+      {expired ? (
+        <Link to="/book"><Button size="lg">Start a new booking</Button></Link>
+      ) : (
+        <Button size="lg" onClick={markPaid}>I Have Made Payment</Button>
+      )}
     </div>
   );
 }

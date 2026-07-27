@@ -45,4 +45,9 @@ export const statusLabel = (s: string) => ({
   approved: "Registration Confirmed",
   rejected: "Rejected",
   changes_requested: "Changes Requested",
+  expired: "Expired",
 }[s] ?? s);
+
+export const DEADLINE_DAYS = 7;
+export const deadlineFromNow = (days = DEADLINE_DAYS) =>
+  new Date(Date.now() + days * 24 * 3600 * 1000).toISOString();

@@ -48,9 +48,11 @@ function Book() {
     setBusy(true);
     const { data: u } = await supabase.auth.getUser();
     if (!u.user) { setBusy(false); return; }
+    const { deadlineFromNow } = await import("@/lib/hooks");
     const { data, error } = await supabase.from("bookings").insert({
       user_id: u.user.id, room_type_id: rt.id, block_id: bl.id, floor_id: fl.id,
       fee: rt.fee, status: "pending_payment",
+      payment_deadline: deadlineFromNow(),
     }).select().single();
     setBusy(false);
     if (error) { toast.error(error.message); return; }

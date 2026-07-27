@@ -63,10 +63,12 @@ export type Database = {
         Row: {
           block_id: string | null
           created_at: string
+          documents_deadline: string | null
           fee: number | null
           floor_id: string | null
           id: string
           manager_notes: string | null
+          payment_deadline: string | null
           payment_reference: string | null
           room_id: string | null
           room_type_id: string | null
@@ -77,10 +79,12 @@ export type Database = {
         Insert: {
           block_id?: string | null
           created_at?: string
+          documents_deadline?: string | null
           fee?: number | null
           floor_id?: string | null
           id?: string
           manager_notes?: string | null
+          payment_deadline?: string | null
           payment_reference?: string | null
           room_id?: string | null
           room_type_id?: string | null
@@ -91,10 +95,12 @@ export type Database = {
         Update: {
           block_id?: string | null
           created_at?: string
+          documents_deadline?: string | null
           fee?: number | null
           floor_id?: string | null
           id?: string
           manager_notes?: string | null
+          payment_deadline?: string | null
           payment_reference?: string | null
           room_id?: string | null
           room_type_id?: string | null
@@ -205,6 +211,48 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      notifications: {
+        Row: {
+          body: string
+          booking_id: string | null
+          created_at: string
+          dedupe_key: string | null
+          email_sent: boolean
+          id: string
+          kind: string
+          link: string | null
+          read: boolean
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          booking_id?: string | null
+          created_at?: string
+          dedupe_key?: string | null
+          email_sent?: boolean
+          id?: string
+          kind: string
+          link?: string | null
+          read?: boolean
+          title: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          booking_id?: string | null
+          created_at?: string
+          dedupe_key?: string | null
+          email_sent?: boolean
+          id?: string
+          kind?: string
+          link?: string | null
+          read?: boolean
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       profiles: {
         Row: {
@@ -387,6 +435,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      process_booking_deadlines: { Args: never; Returns: undefined }
     }
     Enums: {
       account_type: "student" | "nss"
@@ -400,6 +449,7 @@ export type Database = {
         | "approved"
         | "rejected"
         | "changes_requested"
+        | "expired"
       room_status: "available" | "occupied" | "maintenance" | "hidden"
     }
     CompositeTypes: {
@@ -539,6 +589,7 @@ export const Constants = {
         "approved",
         "rejected",
         "changes_requested",
+        "expired",
       ],
       room_status: ["available", "occupied", "maintenance", "hidden"],
     },

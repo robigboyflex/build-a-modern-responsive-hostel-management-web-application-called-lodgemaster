@@ -17,6 +17,7 @@ import { Route as AuthenticatedSelectRoomRouteImport } from './routes/_authentic
 import { Route as AuthenticatedRegistrationRouteImport } from './routes/_authenticated.registration'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated.profile'
 import { Route as AuthenticatedPaymentRouteImport } from './routes/_authenticated.payment'
+import { Route as AuthenticatedNssRouteImport } from './routes/_authenticated.nss'
 import { Route as AuthenticatedManagerRouteImport } from './routes/_authenticated.manager'
 import { Route as AuthenticatedDocumentsRouteImport } from './routes/_authenticated.documents'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated.dashboard'
@@ -69,6 +70,11 @@ const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
 const AuthenticatedPaymentRoute = AuthenticatedPaymentRouteImport.update({
   id: '/payment',
   path: '/payment',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedNssRoute = AuthenticatedNssRouteImport.update({
+  id: '/nss',
+  path: '/nss',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedManagerRoute = AuthenticatedManagerRouteImport.update({
@@ -155,6 +161,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/documents': typeof AuthenticatedDocumentsRoute
   '/manager': typeof AuthenticatedManagerRouteWithChildren
+  '/nss': typeof AuthenticatedNssRoute
   '/payment': typeof AuthenticatedPaymentRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/registration': typeof AuthenticatedRegistrationRoute
@@ -177,6 +184,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/documents': typeof AuthenticatedDocumentsRoute
   '/manager': typeof AuthenticatedManagerRouteWithChildren
+  '/nss': typeof AuthenticatedNssRoute
   '/payment': typeof AuthenticatedPaymentRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/registration': typeof AuthenticatedRegistrationRoute
@@ -201,6 +209,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/documents': typeof AuthenticatedDocumentsRoute
   '/_authenticated/manager': typeof AuthenticatedManagerRouteWithChildren
+  '/_authenticated/nss': typeof AuthenticatedNssRoute
   '/_authenticated/payment': typeof AuthenticatedPaymentRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/registration': typeof AuthenticatedRegistrationRoute
@@ -225,6 +234,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/documents'
     | '/manager'
+    | '/nss'
     | '/payment'
     | '/profile'
     | '/registration'
@@ -247,6 +257,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/documents'
     | '/manager'
+    | '/nss'
     | '/payment'
     | '/profile'
     | '/registration'
@@ -270,6 +281,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/documents'
     | '/_authenticated/manager'
+    | '/_authenticated/nss'
     | '/_authenticated/payment'
     | '/_authenticated/profile'
     | '/_authenticated/registration'
@@ -347,6 +359,13 @@ declare module '@tanstack/react-router' {
       path: '/payment'
       fullPath: '/payment'
       preLoaderRoute: typeof AuthenticatedPaymentRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/nss': {
+      id: '/_authenticated/nss'
+      path: '/nss'
+      fullPath: '/nss'
+      preLoaderRoute: typeof AuthenticatedNssRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/manager': {
@@ -475,6 +494,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDocumentsRoute: typeof AuthenticatedDocumentsRoute
   AuthenticatedManagerRoute: typeof AuthenticatedManagerRouteWithChildren
+  AuthenticatedNssRoute: typeof AuthenticatedNssRoute
   AuthenticatedPaymentRoute: typeof AuthenticatedPaymentRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedRegistrationRoute: typeof AuthenticatedRegistrationRoute
@@ -487,6 +507,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDocumentsRoute: AuthenticatedDocumentsRoute,
   AuthenticatedManagerRoute: AuthenticatedManagerRouteWithChildren,
+  AuthenticatedNssRoute: AuthenticatedNssRoute,
   AuthenticatedPaymentRoute: AuthenticatedPaymentRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedRegistrationRoute: AuthenticatedRegistrationRoute,

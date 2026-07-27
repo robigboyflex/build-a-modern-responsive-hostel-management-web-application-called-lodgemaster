@@ -17,11 +17,13 @@ import { Route as AuthenticatedSelectRoomRouteImport } from './routes/_authentic
 import { Route as AuthenticatedRegistrationRouteImport } from './routes/_authenticated.registration'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated.profile'
 import { Route as AuthenticatedPaymentRouteImport } from './routes/_authenticated.payment'
+import { Route as AuthenticatedNssRouteImport } from './routes/_authenticated.nss'
 import { Route as AuthenticatedManagerRouteImport } from './routes/_authenticated.manager'
 import { Route as AuthenticatedDocumentsRouteImport } from './routes/_authenticated.documents'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated.dashboard'
 import { Route as AuthenticatedBookRouteImport } from './routes/_authenticated.book'
 import { Route as AuthenticatedAnnouncementsRouteImport } from './routes/_authenticated.announcements'
+import { Route as AuthenticatedNssApplicationsRouteImport } from './routes/_authenticated.nss.applications'
 import { Route as AuthenticatedManagerStudentsRouteImport } from './routes/_authenticated.manager.students'
 import { Route as AuthenticatedManagerSettingsRouteImport } from './routes/_authenticated.manager.settings'
 import { Route as AuthenticatedManagerRoomsRouteImport } from './routes/_authenticated.manager.rooms'
@@ -71,6 +73,11 @@ const AuthenticatedPaymentRoute = AuthenticatedPaymentRouteImport.update({
   path: '/payment',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedNssRoute = AuthenticatedNssRouteImport.update({
+  id: '/nss',
+  path: '/nss',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedManagerRoute = AuthenticatedManagerRouteImport.update({
   id: '/manager',
   path: '/manager',
@@ -96,6 +103,12 @@ const AuthenticatedAnnouncementsRoute =
     id: '/announcements',
     path: '/announcements',
     getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedNssApplicationsRoute =
+  AuthenticatedNssApplicationsRouteImport.update({
+    id: '/applications',
+    path: '/applications',
+    getParentRoute: () => AuthenticatedNssRoute,
   } as any)
 const AuthenticatedManagerStudentsRoute =
   AuthenticatedManagerStudentsRouteImport.update({
@@ -155,6 +168,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/documents': typeof AuthenticatedDocumentsRoute
   '/manager': typeof AuthenticatedManagerRouteWithChildren
+  '/nss': typeof AuthenticatedNssRouteWithChildren
   '/payment': typeof AuthenticatedPaymentRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/registration': typeof AuthenticatedRegistrationRoute
@@ -167,6 +181,7 @@ export interface FileRoutesByFullPath {
   '/manager/rooms': typeof AuthenticatedManagerRoomsRoute
   '/manager/settings': typeof AuthenticatedManagerSettingsRoute
   '/manager/students': typeof AuthenticatedManagerStudentsRoute
+  '/nss/applications': typeof AuthenticatedNssApplicationsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -177,6 +192,7 @@ export interface FileRoutesByTo {
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/documents': typeof AuthenticatedDocumentsRoute
   '/manager': typeof AuthenticatedManagerRouteWithChildren
+  '/nss': typeof AuthenticatedNssRouteWithChildren
   '/payment': typeof AuthenticatedPaymentRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/registration': typeof AuthenticatedRegistrationRoute
@@ -189,6 +205,7 @@ export interface FileRoutesByTo {
   '/manager/rooms': typeof AuthenticatedManagerRoomsRoute
   '/manager/settings': typeof AuthenticatedManagerSettingsRoute
   '/manager/students': typeof AuthenticatedManagerStudentsRoute
+  '/nss/applications': typeof AuthenticatedNssApplicationsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -201,6 +218,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/documents': typeof AuthenticatedDocumentsRoute
   '/_authenticated/manager': typeof AuthenticatedManagerRouteWithChildren
+  '/_authenticated/nss': typeof AuthenticatedNssRouteWithChildren
   '/_authenticated/payment': typeof AuthenticatedPaymentRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/registration': typeof AuthenticatedRegistrationRoute
@@ -213,6 +231,7 @@ export interface FileRoutesById {
   '/_authenticated/manager/rooms': typeof AuthenticatedManagerRoomsRoute
   '/_authenticated/manager/settings': typeof AuthenticatedManagerSettingsRoute
   '/_authenticated/manager/students': typeof AuthenticatedManagerStudentsRoute
+  '/_authenticated/nss/applications': typeof AuthenticatedNssApplicationsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -225,6 +244,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/documents'
     | '/manager'
+    | '/nss'
     | '/payment'
     | '/profile'
     | '/registration'
@@ -237,6 +257,7 @@ export interface FileRouteTypes {
     | '/manager/rooms'
     | '/manager/settings'
     | '/manager/students'
+    | '/nss/applications'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -247,6 +268,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/documents'
     | '/manager'
+    | '/nss'
     | '/payment'
     | '/profile'
     | '/registration'
@@ -259,6 +281,7 @@ export interface FileRouteTypes {
     | '/manager/rooms'
     | '/manager/settings'
     | '/manager/students'
+    | '/nss/applications'
   id:
     | '__root__'
     | '/'
@@ -270,6 +293,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard'
     | '/_authenticated/documents'
     | '/_authenticated/manager'
+    | '/_authenticated/nss'
     | '/_authenticated/payment'
     | '/_authenticated/profile'
     | '/_authenticated/registration'
@@ -282,6 +306,7 @@ export interface FileRouteTypes {
     | '/_authenticated/manager/rooms'
     | '/_authenticated/manager/settings'
     | '/_authenticated/manager/students'
+    | '/_authenticated/nss/applications'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -349,6 +374,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPaymentRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/nss': {
+      id: '/_authenticated/nss'
+      path: '/nss'
+      fullPath: '/nss'
+      preLoaderRoute: typeof AuthenticatedNssRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/manager': {
       id: '/_authenticated/manager'
       path: '/manager'
@@ -383,6 +415,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/announcements'
       preLoaderRoute: typeof AuthenticatedAnnouncementsRouteImport
       parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/nss/applications': {
+      id: '/_authenticated/nss/applications'
+      path: '/applications'
+      fullPath: '/nss/applications'
+      preLoaderRoute: typeof AuthenticatedNssApplicationsRouteImport
+      parentRoute: typeof AuthenticatedNssRoute
     }
     '/_authenticated/manager/students': {
       id: '/_authenticated/manager/students'
@@ -469,12 +508,24 @@ const AuthenticatedManagerRouteChildren: AuthenticatedManagerRouteChildren = {
 const AuthenticatedManagerRouteWithChildren =
   AuthenticatedManagerRoute._addFileChildren(AuthenticatedManagerRouteChildren)
 
+interface AuthenticatedNssRouteChildren {
+  AuthenticatedNssApplicationsRoute: typeof AuthenticatedNssApplicationsRoute
+}
+
+const AuthenticatedNssRouteChildren: AuthenticatedNssRouteChildren = {
+  AuthenticatedNssApplicationsRoute: AuthenticatedNssApplicationsRoute,
+}
+
+const AuthenticatedNssRouteWithChildren =
+  AuthenticatedNssRoute._addFileChildren(AuthenticatedNssRouteChildren)
+
 interface AuthenticatedRouteChildren {
   AuthenticatedAnnouncementsRoute: typeof AuthenticatedAnnouncementsRoute
   AuthenticatedBookRoute: typeof AuthenticatedBookRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDocumentsRoute: typeof AuthenticatedDocumentsRoute
   AuthenticatedManagerRoute: typeof AuthenticatedManagerRouteWithChildren
+  AuthenticatedNssRoute: typeof AuthenticatedNssRouteWithChildren
   AuthenticatedPaymentRoute: typeof AuthenticatedPaymentRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedRegistrationRoute: typeof AuthenticatedRegistrationRoute
@@ -487,6 +538,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDocumentsRoute: AuthenticatedDocumentsRoute,
   AuthenticatedManagerRoute: AuthenticatedManagerRouteWithChildren,
+  AuthenticatedNssRoute: AuthenticatedNssRouteWithChildren,
   AuthenticatedPaymentRoute: AuthenticatedPaymentRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedRegistrationRoute: AuthenticatedRegistrationRoute,

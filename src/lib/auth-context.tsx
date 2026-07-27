@@ -10,6 +10,8 @@ interface AuthContextValue {
   roles: Role[];
   loading: boolean;
   isManager: boolean;
+  isNss: boolean;
+  isReviewer: boolean;
   signOut: () => Promise<void>;
   refreshRoles: () => Promise<void>;
 }
@@ -62,6 +64,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         roles,
         loading,
         isManager: roles.includes("manager") || roles.includes("admin"),
+        isNss: roles.includes("nss"),
+        isReviewer: roles.includes("nss") || roles.includes("manager") || roles.includes("admin"),
         signOut,
         refreshRoles,
       }}

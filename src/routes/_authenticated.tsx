@@ -28,7 +28,7 @@ export const Route = createFileRoute("/_authenticated")({
 });
 
 function AuthLayout() {
-  const { user, loading, isManager, signOut } = useAuth();
+  const { user, loading, isManager, isNss, signOut } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,7 +46,7 @@ function AuthLayout() {
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-background">
-        <AppSidebar isManager={isManager} onSignOut={async () => { await signOut(); navigate({ to: "/auth" }); }} email={user.email ?? ""} />
+        <AppSidebar isManager={isManager} isNss={isNss} onSignOut={async () => { await signOut(); navigate({ to: "/auth" }); }} email={user.email ?? ""} />
         <div className="flex-1 flex flex-col min-w-0">
           <header className="h-14 border-b border-border bg-card/60 backdrop-blur flex items-center px-4 gap-2 sticky top-0 z-30">
             <SidebarTrigger />
@@ -64,12 +64,21 @@ function AuthLayout() {
   );
 }
 
-function AppSidebar({ isManager, onSignOut, email }: { isManager: boolean; onSignOut: () => void; email: string }) {
+function AppSidebar({ isManager, isNss, onSignOut, email }: { isManager: boolean; isNss: boolean; onSignOut: () => void; email: string }) {
   const path = useRouterState({ select: (r) => r.location.pathname });
   const studentItems = [
     { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
     { title: "Book Accommodation", url: "/book", icon: BookMarked },
     { title: "My Registration", url: "/registration", icon: ClipboardList },
+    { title: "Documents", url: "/documents", icon: FolderOpen },
+    { title: "Announcements", url: "/announcements", icon: Megaphone },
+    { title: "Profile", url: "/profile", icon: User },
+  ];
+  const nssItems = [
+    { title: "Dashboard", url: "/nss", icon: LayoutDashboard },
+    { title: "Review Applications", url: "/nss/applications", icon: FileText },
+    { title: "My Registration", url: "/registration", icon: ClipboardList },
+    { title: "Book Accommodation", url: "/book", icon: BookMarked },
     { title: "Documents", url: "/documents", icon: FolderOpen },
     { title: "Announcements", url: "/announcements", icon: Megaphone },
     { title: "Profile", url: "/profile", icon: User },
@@ -85,7 +94,8 @@ function AppSidebar({ isManager, onSignOut, email }: { isManager: boolean; onSig
     { title: "Announcements", url: "/manager/announcements", icon: Megaphone },
     { title: "Settings", url: "/manager/settings", icon: Settings },
   ];
-  const items = isManager ? managerItems : studentItems;
+  const items = isManager ? managerItems : isNss ? nssItems : studentItems;
+  const label = isManager ? "Manager" : isNss ? "NSS Reviewer" : "Student";
 
   return (
     <Sidebar collapsible="icon">
@@ -97,7 +107,7 @@ function AppSidebar({ isManager, onSignOut, email }: { isManager: boolean; onSig
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>{isManager ? "Manager" : "Student"}</SidebarGroupLabel>
+          <SidebarGroupLabel>{label}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((it) => (

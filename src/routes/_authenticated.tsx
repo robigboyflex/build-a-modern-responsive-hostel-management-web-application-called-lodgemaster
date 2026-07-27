@@ -46,7 +46,7 @@ function AuthLayout() {
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-background">
-        <AppSidebar isManager={isManager} onSignOut={async () => { await signOut(); navigate({ to: "/auth" }); }} email={user.email ?? ""} />
+        <AppSidebar isManager={isManager} isNss={isNss} onSignOut={async () => { await signOut(); navigate({ to: "/auth" }); }} email={user.email ?? ""} />
         <div className="flex-1 flex flex-col min-w-0">
           <header className="h-14 border-b border-border bg-card/60 backdrop-blur flex items-center px-4 gap-2 sticky top-0 z-30">
             <SidebarTrigger />

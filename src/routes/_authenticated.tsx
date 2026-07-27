@@ -107,7 +107,7 @@ function AppSidebar({ isManager, isNss, onSignOut, email }: { isManager: boolean
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>{isManager ? "Manager" : "Student"}</SidebarGroupLabel>
+          <SidebarGroupLabel>{label}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((it) => (

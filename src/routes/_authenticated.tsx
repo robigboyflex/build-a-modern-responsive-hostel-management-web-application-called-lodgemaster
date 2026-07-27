@@ -64,12 +64,21 @@ function AuthLayout() {
   );
 }
 
-function AppSidebar({ isManager, onSignOut, email }: { isManager: boolean; onSignOut: () => void; email: string }) {
+function AppSidebar({ isManager, isNss, onSignOut, email }: { isManager: boolean; isNss: boolean; onSignOut: () => void; email: string }) {
   const path = useRouterState({ select: (r) => r.location.pathname });
   const studentItems = [
     { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
     { title: "Book Accommodation", url: "/book", icon: BookMarked },
     { title: "My Registration", url: "/registration", icon: ClipboardList },
+    { title: "Documents", url: "/documents", icon: FolderOpen },
+    { title: "Announcements", url: "/announcements", icon: Megaphone },
+    { title: "Profile", url: "/profile", icon: User },
+  ];
+  const nssItems = [
+    { title: "Dashboard", url: "/nss", icon: LayoutDashboard },
+    { title: "Review Applications", url: "/nss/applications", icon: FileText },
+    { title: "My Registration", url: "/registration", icon: ClipboardList },
+    { title: "Book Accommodation", url: "/book", icon: BookMarked },
     { title: "Documents", url: "/documents", icon: FolderOpen },
     { title: "Announcements", url: "/announcements", icon: Megaphone },
     { title: "Profile", url: "/profile", icon: User },
@@ -85,7 +94,8 @@ function AppSidebar({ isManager, onSignOut, email }: { isManager: boolean; onSig
     { title: "Announcements", url: "/manager/announcements", icon: Megaphone },
     { title: "Settings", url: "/manager/settings", icon: Settings },
   ];
-  const items = isManager ? managerItems : studentItems;
+  const items = isManager ? managerItems : isNss ? nssItems : studentItems;
+  const label = isManager ? "Manager" : isNss ? "NSS Reviewer" : "Student";
 
   return (
     <Sidebar collapsible="icon">

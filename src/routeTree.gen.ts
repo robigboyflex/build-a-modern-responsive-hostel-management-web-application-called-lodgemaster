@@ -17,10 +17,13 @@ import { Route as AuthenticatedSelectRoomRouteImport } from './routes/_authentic
 import { Route as AuthenticatedRegistrationRouteImport } from './routes/_authenticated.registration'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated.profile'
 import { Route as AuthenticatedPaymentRouteImport } from './routes/_authenticated.payment'
+import { Route as AuthenticatedManagerRouteImport } from './routes/_authenticated.manager'
 import { Route as AuthenticatedDocumentsRouteImport } from './routes/_authenticated.documents'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated.dashboard'
 import { Route as AuthenticatedBookRouteImport } from './routes/_authenticated.book'
 import { Route as AuthenticatedAnnouncementsRouteImport } from './routes/_authenticated.announcements'
+import { Route as AuthenticatedManagerStudentsRouteImport } from './routes/_authenticated.manager.students'
+import { Route as AuthenticatedManagerApplicationsRouteImport } from './routes/_authenticated.manager.applications'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -62,6 +65,11 @@ const AuthenticatedPaymentRoute = AuthenticatedPaymentRouteImport.update({
   path: '/payment',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
+const AuthenticatedManagerRoute = AuthenticatedManagerRouteImport.update({
+  id: '/manager',
+  path: '/manager',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
 const AuthenticatedDocumentsRoute = AuthenticatedDocumentsRouteImport.update({
   id: '/documents',
   path: '/documents',
@@ -83,6 +91,18 @@ const AuthenticatedAnnouncementsRoute =
     path: '/announcements',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedManagerStudentsRoute =
+  AuthenticatedManagerStudentsRouteImport.update({
+    id: '/students',
+    path: '/students',
+    getParentRoute: () => AuthenticatedManagerRoute,
+  } as any)
+const AuthenticatedManagerApplicationsRoute =
+  AuthenticatedManagerApplicationsRouteImport.update({
+    id: '/applications',
+    path: '/applications',
+    getParentRoute: () => AuthenticatedManagerRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -92,10 +112,13 @@ export interface FileRoutesByFullPath {
   '/book': typeof AuthenticatedBookRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/documents': typeof AuthenticatedDocumentsRoute
+  '/manager': typeof AuthenticatedManagerRouteWithChildren
   '/payment': typeof AuthenticatedPaymentRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/registration': typeof AuthenticatedRegistrationRoute
   '/select-room': typeof AuthenticatedSelectRoomRoute
+  '/manager/applications': typeof AuthenticatedManagerApplicationsRoute
+  '/manager/students': typeof AuthenticatedManagerStudentsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -105,10 +128,13 @@ export interface FileRoutesByTo {
   '/book': typeof AuthenticatedBookRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/documents': typeof AuthenticatedDocumentsRoute
+  '/manager': typeof AuthenticatedManagerRouteWithChildren
   '/payment': typeof AuthenticatedPaymentRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/registration': typeof AuthenticatedRegistrationRoute
   '/select-room': typeof AuthenticatedSelectRoomRoute
+  '/manager/applications': typeof AuthenticatedManagerApplicationsRoute
+  '/manager/students': typeof AuthenticatedManagerStudentsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -120,10 +146,13 @@ export interface FileRoutesById {
   '/_authenticated/book': typeof AuthenticatedBookRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/documents': typeof AuthenticatedDocumentsRoute
+  '/_authenticated/manager': typeof AuthenticatedManagerRouteWithChildren
   '/_authenticated/payment': typeof AuthenticatedPaymentRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/registration': typeof AuthenticatedRegistrationRoute
   '/_authenticated/select-room': typeof AuthenticatedSelectRoomRoute
+  '/_authenticated/manager/applications': typeof AuthenticatedManagerApplicationsRoute
+  '/_authenticated/manager/students': typeof AuthenticatedManagerStudentsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -135,10 +164,13 @@ export interface FileRouteTypes {
     | '/book'
     | '/dashboard'
     | '/documents'
+    | '/manager'
     | '/payment'
     | '/profile'
     | '/registration'
     | '/select-room'
+    | '/manager/applications'
+    | '/manager/students'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -148,10 +180,13 @@ export interface FileRouteTypes {
     | '/book'
     | '/dashboard'
     | '/documents'
+    | '/manager'
     | '/payment'
     | '/profile'
     | '/registration'
     | '/select-room'
+    | '/manager/applications'
+    | '/manager/students'
   id:
     | '__root__'
     | '/'
@@ -162,10 +197,13 @@ export interface FileRouteTypes {
     | '/_authenticated/book'
     | '/_authenticated/dashboard'
     | '/_authenticated/documents'
+    | '/_authenticated/manager'
     | '/_authenticated/payment'
     | '/_authenticated/profile'
     | '/_authenticated/registration'
     | '/_authenticated/select-room'
+    | '/_authenticated/manager/applications'
+    | '/_authenticated/manager/students'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -233,6 +271,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedPaymentRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/manager': {
+      id: '/_authenticated/manager'
+      path: '/manager'
+      fullPath: '/manager'
+      preLoaderRoute: typeof AuthenticatedManagerRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/documents': {
       id: '/_authenticated/documents'
       path: '/documents'
@@ -261,14 +306,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAnnouncementsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/manager/students': {
+      id: '/_authenticated/manager/students'
+      path: '/students'
+      fullPath: '/manager/students'
+      preLoaderRoute: typeof AuthenticatedManagerStudentsRouteImport
+      parentRoute: typeof AuthenticatedManagerRoute
+    }
+    '/_authenticated/manager/applications': {
+      id: '/_authenticated/manager/applications'
+      path: '/applications'
+      fullPath: '/manager/applications'
+      preLoaderRoute: typeof AuthenticatedManagerApplicationsRouteImport
+      parentRoute: typeof AuthenticatedManagerRoute
+    }
   }
 }
+
+interface AuthenticatedManagerRouteChildren {
+  AuthenticatedManagerApplicationsRoute: typeof AuthenticatedManagerApplicationsRoute
+  AuthenticatedManagerStudentsRoute: typeof AuthenticatedManagerStudentsRoute
+}
+
+const AuthenticatedManagerRouteChildren: AuthenticatedManagerRouteChildren = {
+  AuthenticatedManagerApplicationsRoute: AuthenticatedManagerApplicationsRoute,
+  AuthenticatedManagerStudentsRoute: AuthenticatedManagerStudentsRoute,
+}
+
+const AuthenticatedManagerRouteWithChildren =
+  AuthenticatedManagerRoute._addFileChildren(AuthenticatedManagerRouteChildren)
 
 interface AuthenticatedRouteChildren {
   AuthenticatedAnnouncementsRoute: typeof AuthenticatedAnnouncementsRoute
   AuthenticatedBookRoute: typeof AuthenticatedBookRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDocumentsRoute: typeof AuthenticatedDocumentsRoute
+  AuthenticatedManagerRoute: typeof AuthenticatedManagerRouteWithChildren
   AuthenticatedPaymentRoute: typeof AuthenticatedPaymentRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedRegistrationRoute: typeof AuthenticatedRegistrationRoute
@@ -280,6 +353,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedBookRoute: AuthenticatedBookRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDocumentsRoute: AuthenticatedDocumentsRoute,
+  AuthenticatedManagerRoute: AuthenticatedManagerRouteWithChildren,
   AuthenticatedPaymentRoute: AuthenticatedPaymentRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedRegistrationRoute: AuthenticatedRegistrationRoute,

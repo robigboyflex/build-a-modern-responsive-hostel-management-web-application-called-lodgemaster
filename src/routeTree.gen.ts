@@ -9,38 +9,311 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedSelectRoomRouteImport } from './routes/_authenticated.select-room'
+import { Route as AuthenticatedRegistrationRouteImport } from './routes/_authenticated.registration'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated.profile'
+import { Route as AuthenticatedPaymentRouteImport } from './routes/_authenticated.payment'
+import { Route as AuthenticatedManagerRouteImport } from './routes/_authenticated.manager'
+import { Route as AuthenticatedDocumentsRouteImport } from './routes/_authenticated.documents'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated.dashboard'
+import { Route as AuthenticatedBookRouteImport } from './routes/_authenticated.book'
+import { Route as AuthenticatedAnnouncementsRouteImport } from './routes/_authenticated.announcements'
+import { Route as AuthenticatedManagerStudentsRouteImport } from './routes/_authenticated.manager.students'
+import { Route as AuthenticatedManagerSettingsRouteImport } from './routes/_authenticated.manager.settings'
+import { Route as AuthenticatedManagerRoomsRouteImport } from './routes/_authenticated.manager.rooms'
+import { Route as AuthenticatedManagerRoomTypesRouteImport } from './routes/_authenticated.manager.room-types'
+import { Route as AuthenticatedManagerFloorsRouteImport } from './routes/_authenticated.manager.floors'
+import { Route as AuthenticatedManagerBlocksRouteImport } from './routes/_authenticated.manager.blocks'
+import { Route as AuthenticatedManagerApplicationsRouteImport } from './routes/_authenticated.manager.applications'
+import { Route as AuthenticatedManagerAnnouncementsRouteImport } from './routes/_authenticated.manager.announcements'
 
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedSelectRoomRoute = AuthenticatedSelectRoomRouteImport.update({
+  id: '/select-room',
+  path: '/select-room',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedRegistrationRoute =
+  AuthenticatedRegistrationRouteImport.update({
+    id: '/registration',
+    path: '/registration',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedPaymentRoute = AuthenticatedPaymentRouteImport.update({
+  id: '/payment',
+  path: '/payment',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedManagerRoute = AuthenticatedManagerRouteImport.update({
+  id: '/manager',
+  path: '/manager',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedDocumentsRoute = AuthenticatedDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedBookRoute = AuthenticatedBookRouteImport.update({
+  id: '/book',
+  path: '/book',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedAnnouncementsRoute =
+  AuthenticatedAnnouncementsRouteImport.update({
+    id: '/announcements',
+    path: '/announcements',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedManagerStudentsRoute =
+  AuthenticatedManagerStudentsRouteImport.update({
+    id: '/students',
+    path: '/students',
+    getParentRoute: () => AuthenticatedManagerRoute,
+  } as any)
+const AuthenticatedManagerSettingsRoute =
+  AuthenticatedManagerSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedManagerRoute,
+  } as any)
+const AuthenticatedManagerRoomsRoute =
+  AuthenticatedManagerRoomsRouteImport.update({
+    id: '/rooms',
+    path: '/rooms',
+    getParentRoute: () => AuthenticatedManagerRoute,
+  } as any)
+const AuthenticatedManagerRoomTypesRoute =
+  AuthenticatedManagerRoomTypesRouteImport.update({
+    id: '/room-types',
+    path: '/room-types',
+    getParentRoute: () => AuthenticatedManagerRoute,
+  } as any)
+const AuthenticatedManagerFloorsRoute =
+  AuthenticatedManagerFloorsRouteImport.update({
+    id: '/floors',
+    path: '/floors',
+    getParentRoute: () => AuthenticatedManagerRoute,
+  } as any)
+const AuthenticatedManagerBlocksRoute =
+  AuthenticatedManagerBlocksRouteImport.update({
+    id: '/blocks',
+    path: '/blocks',
+    getParentRoute: () => AuthenticatedManagerRoute,
+  } as any)
+const AuthenticatedManagerApplicationsRoute =
+  AuthenticatedManagerApplicationsRouteImport.update({
+    id: '/applications',
+    path: '/applications',
+    getParentRoute: () => AuthenticatedManagerRoute,
+  } as any)
+const AuthenticatedManagerAnnouncementsRoute =
+  AuthenticatedManagerAnnouncementsRouteImport.update({
+    id: '/announcements',
+    path: '/announcements',
+    getParentRoute: () => AuthenticatedManagerRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/announcements': typeof AuthenticatedAnnouncementsRoute
+  '/book': typeof AuthenticatedBookRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/documents': typeof AuthenticatedDocumentsRoute
+  '/manager': typeof AuthenticatedManagerRouteWithChildren
+  '/payment': typeof AuthenticatedPaymentRoute
+  '/profile': typeof AuthenticatedProfileRoute
+  '/registration': typeof AuthenticatedRegistrationRoute
+  '/select-room': typeof AuthenticatedSelectRoomRoute
+  '/manager/announcements': typeof AuthenticatedManagerAnnouncementsRoute
+  '/manager/applications': typeof AuthenticatedManagerApplicationsRoute
+  '/manager/blocks': typeof AuthenticatedManagerBlocksRoute
+  '/manager/floors': typeof AuthenticatedManagerFloorsRoute
+  '/manager/room-types': typeof AuthenticatedManagerRoomTypesRoute
+  '/manager/rooms': typeof AuthenticatedManagerRoomsRoute
+  '/manager/settings': typeof AuthenticatedManagerSettingsRoute
+  '/manager/students': typeof AuthenticatedManagerStudentsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/announcements': typeof AuthenticatedAnnouncementsRoute
+  '/book': typeof AuthenticatedBookRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/documents': typeof AuthenticatedDocumentsRoute
+  '/manager': typeof AuthenticatedManagerRouteWithChildren
+  '/payment': typeof AuthenticatedPaymentRoute
+  '/profile': typeof AuthenticatedProfileRoute
+  '/registration': typeof AuthenticatedRegistrationRoute
+  '/select-room': typeof AuthenticatedSelectRoomRoute
+  '/manager/announcements': typeof AuthenticatedManagerAnnouncementsRoute
+  '/manager/applications': typeof AuthenticatedManagerApplicationsRoute
+  '/manager/blocks': typeof AuthenticatedManagerBlocksRoute
+  '/manager/floors': typeof AuthenticatedManagerFloorsRoute
+  '/manager/room-types': typeof AuthenticatedManagerRoomTypesRoute
+  '/manager/rooms': typeof AuthenticatedManagerRoomsRoute
+  '/manager/settings': typeof AuthenticatedManagerSettingsRoute
+  '/manager/students': typeof AuthenticatedManagerStudentsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/announcements': typeof AuthenticatedAnnouncementsRoute
+  '/_authenticated/book': typeof AuthenticatedBookRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/documents': typeof AuthenticatedDocumentsRoute
+  '/_authenticated/manager': typeof AuthenticatedManagerRouteWithChildren
+  '/_authenticated/payment': typeof AuthenticatedPaymentRoute
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/_authenticated/registration': typeof AuthenticatedRegistrationRoute
+  '/_authenticated/select-room': typeof AuthenticatedSelectRoomRoute
+  '/_authenticated/manager/announcements': typeof AuthenticatedManagerAnnouncementsRoute
+  '/_authenticated/manager/applications': typeof AuthenticatedManagerApplicationsRoute
+  '/_authenticated/manager/blocks': typeof AuthenticatedManagerBlocksRoute
+  '/_authenticated/manager/floors': typeof AuthenticatedManagerFloorsRoute
+  '/_authenticated/manager/room-types': typeof AuthenticatedManagerRoomTypesRoute
+  '/_authenticated/manager/rooms': typeof AuthenticatedManagerRoomsRoute
+  '/_authenticated/manager/settings': typeof AuthenticatedManagerSettingsRoute
+  '/_authenticated/manager/students': typeof AuthenticatedManagerStudentsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/announcements'
+    | '/book'
+    | '/dashboard'
+    | '/documents'
+    | '/manager'
+    | '/payment'
+    | '/profile'
+    | '/registration'
+    | '/select-room'
+    | '/manager/announcements'
+    | '/manager/applications'
+    | '/manager/blocks'
+    | '/manager/floors'
+    | '/manager/room-types'
+    | '/manager/rooms'
+    | '/manager/settings'
+    | '/manager/students'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/announcements'
+    | '/book'
+    | '/dashboard'
+    | '/documents'
+    | '/manager'
+    | '/payment'
+    | '/profile'
+    | '/registration'
+    | '/select-room'
+    | '/manager/announcements'
+    | '/manager/applications'
+    | '/manager/blocks'
+    | '/manager/floors'
+    | '/manager/room-types'
+    | '/manager/rooms'
+    | '/manager/settings'
+    | '/manager/students'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/reset-password'
+    | '/_authenticated/announcements'
+    | '/_authenticated/book'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/documents'
+    | '/_authenticated/manager'
+    | '/_authenticated/payment'
+    | '/_authenticated/profile'
+    | '/_authenticated/registration'
+    | '/_authenticated/select-room'
+    | '/_authenticated/manager/announcements'
+    | '/_authenticated/manager/applications'
+    | '/_authenticated/manager/blocks'
+    | '/_authenticated/manager/floors'
+    | '/_authenticated/manager/room-types'
+    | '/_authenticated/manager/rooms'
+    | '/_authenticated/manager/settings'
+    | '/_authenticated/manager/students'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +321,188 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/select-room': {
+      id: '/_authenticated/select-room'
+      path: '/select-room'
+      fullPath: '/select-room'
+      preLoaderRoute: typeof AuthenticatedSelectRoomRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/registration': {
+      id: '/_authenticated/registration'
+      path: '/registration'
+      fullPath: '/registration'
+      preLoaderRoute: typeof AuthenticatedRegistrationRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/payment': {
+      id: '/_authenticated/payment'
+      path: '/payment'
+      fullPath: '/payment'
+      preLoaderRoute: typeof AuthenticatedPaymentRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/manager': {
+      id: '/_authenticated/manager'
+      path: '/manager'
+      fullPath: '/manager'
+      preLoaderRoute: typeof AuthenticatedManagerRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/documents': {
+      id: '/_authenticated/documents'
+      path: '/documents'
+      fullPath: '/documents'
+      preLoaderRoute: typeof AuthenticatedDocumentsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/book': {
+      id: '/_authenticated/book'
+      path: '/book'
+      fullPath: '/book'
+      preLoaderRoute: typeof AuthenticatedBookRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/announcements': {
+      id: '/_authenticated/announcements'
+      path: '/announcements'
+      fullPath: '/announcements'
+      preLoaderRoute: typeof AuthenticatedAnnouncementsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/manager/students': {
+      id: '/_authenticated/manager/students'
+      path: '/students'
+      fullPath: '/manager/students'
+      preLoaderRoute: typeof AuthenticatedManagerStudentsRouteImport
+      parentRoute: typeof AuthenticatedManagerRoute
+    }
+    '/_authenticated/manager/settings': {
+      id: '/_authenticated/manager/settings'
+      path: '/settings'
+      fullPath: '/manager/settings'
+      preLoaderRoute: typeof AuthenticatedManagerSettingsRouteImport
+      parentRoute: typeof AuthenticatedManagerRoute
+    }
+    '/_authenticated/manager/rooms': {
+      id: '/_authenticated/manager/rooms'
+      path: '/rooms'
+      fullPath: '/manager/rooms'
+      preLoaderRoute: typeof AuthenticatedManagerRoomsRouteImport
+      parentRoute: typeof AuthenticatedManagerRoute
+    }
+    '/_authenticated/manager/room-types': {
+      id: '/_authenticated/manager/room-types'
+      path: '/room-types'
+      fullPath: '/manager/room-types'
+      preLoaderRoute: typeof AuthenticatedManagerRoomTypesRouteImport
+      parentRoute: typeof AuthenticatedManagerRoute
+    }
+    '/_authenticated/manager/floors': {
+      id: '/_authenticated/manager/floors'
+      path: '/floors'
+      fullPath: '/manager/floors'
+      preLoaderRoute: typeof AuthenticatedManagerFloorsRouteImport
+      parentRoute: typeof AuthenticatedManagerRoute
+    }
+    '/_authenticated/manager/blocks': {
+      id: '/_authenticated/manager/blocks'
+      path: '/blocks'
+      fullPath: '/manager/blocks'
+      preLoaderRoute: typeof AuthenticatedManagerBlocksRouteImport
+      parentRoute: typeof AuthenticatedManagerRoute
+    }
+    '/_authenticated/manager/applications': {
+      id: '/_authenticated/manager/applications'
+      path: '/applications'
+      fullPath: '/manager/applications'
+      preLoaderRoute: typeof AuthenticatedManagerApplicationsRouteImport
+      parentRoute: typeof AuthenticatedManagerRoute
+    }
+    '/_authenticated/manager/announcements': {
+      id: '/_authenticated/manager/announcements'
+      path: '/announcements'
+      fullPath: '/manager/announcements'
+      preLoaderRoute: typeof AuthenticatedManagerAnnouncementsRouteImport
+      parentRoute: typeof AuthenticatedManagerRoute
+    }
   }
 }
 
+interface AuthenticatedManagerRouteChildren {
+  AuthenticatedManagerAnnouncementsRoute: typeof AuthenticatedManagerAnnouncementsRoute
+  AuthenticatedManagerApplicationsRoute: typeof AuthenticatedManagerApplicationsRoute
+  AuthenticatedManagerBlocksRoute: typeof AuthenticatedManagerBlocksRoute
+  AuthenticatedManagerFloorsRoute: typeof AuthenticatedManagerFloorsRoute
+  AuthenticatedManagerRoomTypesRoute: typeof AuthenticatedManagerRoomTypesRoute
+  AuthenticatedManagerRoomsRoute: typeof AuthenticatedManagerRoomsRoute
+  AuthenticatedManagerSettingsRoute: typeof AuthenticatedManagerSettingsRoute
+  AuthenticatedManagerStudentsRoute: typeof AuthenticatedManagerStudentsRoute
+}
+
+const AuthenticatedManagerRouteChildren: AuthenticatedManagerRouteChildren = {
+  AuthenticatedManagerAnnouncementsRoute:
+    AuthenticatedManagerAnnouncementsRoute,
+  AuthenticatedManagerApplicationsRoute: AuthenticatedManagerApplicationsRoute,
+  AuthenticatedManagerBlocksRoute: AuthenticatedManagerBlocksRoute,
+  AuthenticatedManagerFloorsRoute: AuthenticatedManagerFloorsRoute,
+  AuthenticatedManagerRoomTypesRoute: AuthenticatedManagerRoomTypesRoute,
+  AuthenticatedManagerRoomsRoute: AuthenticatedManagerRoomsRoute,
+  AuthenticatedManagerSettingsRoute: AuthenticatedManagerSettingsRoute,
+  AuthenticatedManagerStudentsRoute: AuthenticatedManagerStudentsRoute,
+}
+
+const AuthenticatedManagerRouteWithChildren =
+  AuthenticatedManagerRoute._addFileChildren(AuthenticatedManagerRouteChildren)
+
+interface AuthenticatedRouteChildren {
+  AuthenticatedAnnouncementsRoute: typeof AuthenticatedAnnouncementsRoute
+  AuthenticatedBookRoute: typeof AuthenticatedBookRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDocumentsRoute: typeof AuthenticatedDocumentsRoute
+  AuthenticatedManagerRoute: typeof AuthenticatedManagerRouteWithChildren
+  AuthenticatedPaymentRoute: typeof AuthenticatedPaymentRoute
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedRegistrationRoute: typeof AuthenticatedRegistrationRoute
+  AuthenticatedSelectRoomRoute: typeof AuthenticatedSelectRoomRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAnnouncementsRoute: AuthenticatedAnnouncementsRoute,
+  AuthenticatedBookRoute: AuthenticatedBookRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDocumentsRoute: AuthenticatedDocumentsRoute,
+  AuthenticatedManagerRoute: AuthenticatedManagerRouteWithChildren,
+  AuthenticatedPaymentRoute: AuthenticatedPaymentRoute,
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedRegistrationRoute: AuthenticatedRegistrationRoute,
+  AuthenticatedSelectRoomRoute: AuthenticatedSelectRoomRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

@@ -23,7 +23,13 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as AuthenticatedBookRouteImport } from './routes/_authenticated.book'
 import { Route as AuthenticatedAnnouncementsRouteImport } from './routes/_authenticated.announcements'
 import { Route as AuthenticatedManagerStudentsRouteImport } from './routes/_authenticated.manager.students'
+import { Route as AuthenticatedManagerSettingsRouteImport } from './routes/_authenticated.manager.settings'
+import { Route as AuthenticatedManagerRoomsRouteImport } from './routes/_authenticated.manager.rooms'
+import { Route as AuthenticatedManagerRoomTypesRouteImport } from './routes/_authenticated.manager.room-types'
+import { Route as AuthenticatedManagerFloorsRouteImport } from './routes/_authenticated.manager.floors'
+import { Route as AuthenticatedManagerBlocksRouteImport } from './routes/_authenticated.manager.blocks'
 import { Route as AuthenticatedManagerApplicationsRouteImport } from './routes/_authenticated.manager.applications'
+import { Route as AuthenticatedManagerAnnouncementsRouteImport } from './routes/_authenticated.manager.announcements'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -97,10 +103,46 @@ const AuthenticatedManagerStudentsRoute =
     path: '/students',
     getParentRoute: () => AuthenticatedManagerRoute,
   } as any)
+const AuthenticatedManagerSettingsRoute =
+  AuthenticatedManagerSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedManagerRoute,
+  } as any)
+const AuthenticatedManagerRoomsRoute =
+  AuthenticatedManagerRoomsRouteImport.update({
+    id: '/rooms',
+    path: '/rooms',
+    getParentRoute: () => AuthenticatedManagerRoute,
+  } as any)
+const AuthenticatedManagerRoomTypesRoute =
+  AuthenticatedManagerRoomTypesRouteImport.update({
+    id: '/room-types',
+    path: '/room-types',
+    getParentRoute: () => AuthenticatedManagerRoute,
+  } as any)
+const AuthenticatedManagerFloorsRoute =
+  AuthenticatedManagerFloorsRouteImport.update({
+    id: '/floors',
+    path: '/floors',
+    getParentRoute: () => AuthenticatedManagerRoute,
+  } as any)
+const AuthenticatedManagerBlocksRoute =
+  AuthenticatedManagerBlocksRouteImport.update({
+    id: '/blocks',
+    path: '/blocks',
+    getParentRoute: () => AuthenticatedManagerRoute,
+  } as any)
 const AuthenticatedManagerApplicationsRoute =
   AuthenticatedManagerApplicationsRouteImport.update({
     id: '/applications',
     path: '/applications',
+    getParentRoute: () => AuthenticatedManagerRoute,
+  } as any)
+const AuthenticatedManagerAnnouncementsRoute =
+  AuthenticatedManagerAnnouncementsRouteImport.update({
+    id: '/announcements',
+    path: '/announcements',
     getParentRoute: () => AuthenticatedManagerRoute,
   } as any)
 
@@ -117,7 +159,13 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AuthenticatedProfileRoute
   '/registration': typeof AuthenticatedRegistrationRoute
   '/select-room': typeof AuthenticatedSelectRoomRoute
+  '/manager/announcements': typeof AuthenticatedManagerAnnouncementsRoute
   '/manager/applications': typeof AuthenticatedManagerApplicationsRoute
+  '/manager/blocks': typeof AuthenticatedManagerBlocksRoute
+  '/manager/floors': typeof AuthenticatedManagerFloorsRoute
+  '/manager/room-types': typeof AuthenticatedManagerRoomTypesRoute
+  '/manager/rooms': typeof AuthenticatedManagerRoomsRoute
+  '/manager/settings': typeof AuthenticatedManagerSettingsRoute
   '/manager/students': typeof AuthenticatedManagerStudentsRoute
 }
 export interface FileRoutesByTo {
@@ -133,7 +181,13 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedProfileRoute
   '/registration': typeof AuthenticatedRegistrationRoute
   '/select-room': typeof AuthenticatedSelectRoomRoute
+  '/manager/announcements': typeof AuthenticatedManagerAnnouncementsRoute
   '/manager/applications': typeof AuthenticatedManagerApplicationsRoute
+  '/manager/blocks': typeof AuthenticatedManagerBlocksRoute
+  '/manager/floors': typeof AuthenticatedManagerFloorsRoute
+  '/manager/room-types': typeof AuthenticatedManagerRoomTypesRoute
+  '/manager/rooms': typeof AuthenticatedManagerRoomsRoute
+  '/manager/settings': typeof AuthenticatedManagerSettingsRoute
   '/manager/students': typeof AuthenticatedManagerStudentsRoute
 }
 export interface FileRoutesById {
@@ -151,7 +205,13 @@ export interface FileRoutesById {
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/registration': typeof AuthenticatedRegistrationRoute
   '/_authenticated/select-room': typeof AuthenticatedSelectRoomRoute
+  '/_authenticated/manager/announcements': typeof AuthenticatedManagerAnnouncementsRoute
   '/_authenticated/manager/applications': typeof AuthenticatedManagerApplicationsRoute
+  '/_authenticated/manager/blocks': typeof AuthenticatedManagerBlocksRoute
+  '/_authenticated/manager/floors': typeof AuthenticatedManagerFloorsRoute
+  '/_authenticated/manager/room-types': typeof AuthenticatedManagerRoomTypesRoute
+  '/_authenticated/manager/rooms': typeof AuthenticatedManagerRoomsRoute
+  '/_authenticated/manager/settings': typeof AuthenticatedManagerSettingsRoute
   '/_authenticated/manager/students': typeof AuthenticatedManagerStudentsRoute
 }
 export interface FileRouteTypes {
@@ -169,7 +229,13 @@ export interface FileRouteTypes {
     | '/profile'
     | '/registration'
     | '/select-room'
+    | '/manager/announcements'
     | '/manager/applications'
+    | '/manager/blocks'
+    | '/manager/floors'
+    | '/manager/room-types'
+    | '/manager/rooms'
+    | '/manager/settings'
     | '/manager/students'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -185,7 +251,13 @@ export interface FileRouteTypes {
     | '/profile'
     | '/registration'
     | '/select-room'
+    | '/manager/announcements'
     | '/manager/applications'
+    | '/manager/blocks'
+    | '/manager/floors'
+    | '/manager/room-types'
+    | '/manager/rooms'
+    | '/manager/settings'
     | '/manager/students'
   id:
     | '__root__'
@@ -202,7 +274,13 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/_authenticated/registration'
     | '/_authenticated/select-room'
+    | '/_authenticated/manager/announcements'
     | '/_authenticated/manager/applications'
+    | '/_authenticated/manager/blocks'
+    | '/_authenticated/manager/floors'
+    | '/_authenticated/manager/room-types'
+    | '/_authenticated/manager/rooms'
+    | '/_authenticated/manager/settings'
     | '/_authenticated/manager/students'
   fileRoutesById: FileRoutesById
 }
@@ -313,6 +391,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedManagerStudentsRouteImport
       parentRoute: typeof AuthenticatedManagerRoute
     }
+    '/_authenticated/manager/settings': {
+      id: '/_authenticated/manager/settings'
+      path: '/settings'
+      fullPath: '/manager/settings'
+      preLoaderRoute: typeof AuthenticatedManagerSettingsRouteImport
+      parentRoute: typeof AuthenticatedManagerRoute
+    }
+    '/_authenticated/manager/rooms': {
+      id: '/_authenticated/manager/rooms'
+      path: '/rooms'
+      fullPath: '/manager/rooms'
+      preLoaderRoute: typeof AuthenticatedManagerRoomsRouteImport
+      parentRoute: typeof AuthenticatedManagerRoute
+    }
+    '/_authenticated/manager/room-types': {
+      id: '/_authenticated/manager/room-types'
+      path: '/room-types'
+      fullPath: '/manager/room-types'
+      preLoaderRoute: typeof AuthenticatedManagerRoomTypesRouteImport
+      parentRoute: typeof AuthenticatedManagerRoute
+    }
+    '/_authenticated/manager/floors': {
+      id: '/_authenticated/manager/floors'
+      path: '/floors'
+      fullPath: '/manager/floors'
+      preLoaderRoute: typeof AuthenticatedManagerFloorsRouteImport
+      parentRoute: typeof AuthenticatedManagerRoute
+    }
+    '/_authenticated/manager/blocks': {
+      id: '/_authenticated/manager/blocks'
+      path: '/blocks'
+      fullPath: '/manager/blocks'
+      preLoaderRoute: typeof AuthenticatedManagerBlocksRouteImport
+      parentRoute: typeof AuthenticatedManagerRoute
+    }
     '/_authenticated/manager/applications': {
       id: '/_authenticated/manager/applications'
       path: '/applications'
@@ -320,16 +433,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedManagerApplicationsRouteImport
       parentRoute: typeof AuthenticatedManagerRoute
     }
+    '/_authenticated/manager/announcements': {
+      id: '/_authenticated/manager/announcements'
+      path: '/announcements'
+      fullPath: '/manager/announcements'
+      preLoaderRoute: typeof AuthenticatedManagerAnnouncementsRouteImport
+      parentRoute: typeof AuthenticatedManagerRoute
+    }
   }
 }
 
 interface AuthenticatedManagerRouteChildren {
+  AuthenticatedManagerAnnouncementsRoute: typeof AuthenticatedManagerAnnouncementsRoute
   AuthenticatedManagerApplicationsRoute: typeof AuthenticatedManagerApplicationsRoute
+  AuthenticatedManagerBlocksRoute: typeof AuthenticatedManagerBlocksRoute
+  AuthenticatedManagerFloorsRoute: typeof AuthenticatedManagerFloorsRoute
+  AuthenticatedManagerRoomTypesRoute: typeof AuthenticatedManagerRoomTypesRoute
+  AuthenticatedManagerRoomsRoute: typeof AuthenticatedManagerRoomsRoute
+  AuthenticatedManagerSettingsRoute: typeof AuthenticatedManagerSettingsRoute
   AuthenticatedManagerStudentsRoute: typeof AuthenticatedManagerStudentsRoute
 }
 
 const AuthenticatedManagerRouteChildren: AuthenticatedManagerRouteChildren = {
+  AuthenticatedManagerAnnouncementsRoute:
+    AuthenticatedManagerAnnouncementsRoute,
   AuthenticatedManagerApplicationsRoute: AuthenticatedManagerApplicationsRoute,
+  AuthenticatedManagerBlocksRoute: AuthenticatedManagerBlocksRoute,
+  AuthenticatedManagerFloorsRoute: AuthenticatedManagerFloorsRoute,
+  AuthenticatedManagerRoomTypesRoute: AuthenticatedManagerRoomTypesRoute,
+  AuthenticatedManagerRoomsRoute: AuthenticatedManagerRoomsRoute,
+  AuthenticatedManagerSettingsRoute: AuthenticatedManagerSettingsRoute,
   AuthenticatedManagerStudentsRoute: AuthenticatedManagerStudentsRoute,
 }
 
@@ -373,3 +506,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

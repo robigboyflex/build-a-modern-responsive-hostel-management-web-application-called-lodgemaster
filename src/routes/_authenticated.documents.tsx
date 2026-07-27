@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useCurrentBooking } from "@/lib/hooks";
+import { DeadlineCountdown } from "@/components/deadline-countdown";
 import { Upload, FileCheck2, Trash2 } from "lucide-react";
 
 const DOC_TYPES = [
@@ -88,6 +89,10 @@ function Docs() {
         <h1 className="text-3xl font-bold">Upload Documents</h1>
         <p className="text-muted-foreground mt-1">PDF, PNG, or JPEG · Max 10 MB each</p>
       </div>
+
+      <DeadlineCountdown deadline={booking?.documents_deadline} label="Document upload deadline" />
+
+
 
       <div className="grid gap-4">
         {DOC_TYPES.map((d) => {

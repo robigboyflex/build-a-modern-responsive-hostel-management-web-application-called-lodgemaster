@@ -21,6 +21,7 @@ import {
   ClipboardList, Users, DoorOpen, Layers, Boxes, BedDouble, Settings, LogOut,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { NotificationsBell } from "@/components/notifications-bell";
 
 export const Route = createFileRoute("/_authenticated")({
   component: AuthLayout,
@@ -50,6 +51,7 @@ function AuthLayout() {
           <header className="h-14 border-b border-border bg-card/60 backdrop-blur flex items-center px-4 gap-2 sticky top-0 z-30">
             <SidebarTrigger />
             <div className="ml-auto flex items-center gap-2">
+              <NotificationsBell />
               <Link to="/profile">
                 <Avatar className="h-8 w-8"><AvatarFallback className="bg-primary text-primary-foreground text-xs">{(user.email ?? "?").slice(0, 2).toUpperCase()}</AvatarFallback></Avatar>
               </Link>

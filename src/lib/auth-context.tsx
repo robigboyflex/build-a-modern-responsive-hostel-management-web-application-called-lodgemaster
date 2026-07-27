@@ -10,6 +10,8 @@ interface AuthContextValue {
   roles: Role[];
   loading: boolean;
   isManager: boolean;
+  isNss: boolean;
+  isReviewer: boolean;
   signOut: () => Promise<void>;
   refreshRoles: () => Promise<void>;
 }

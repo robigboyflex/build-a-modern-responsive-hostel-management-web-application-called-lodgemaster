@@ -67,6 +67,15 @@ function Landing() {
 
       {/* Hero */}
       <section className="relative overflow-hidden">
+        <img
+          src={heroBg}
+          alt=""
+          aria-hidden="true"
+          width={1920}
+          height={1088}
+          className="absolute inset-0 -z-10 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/80 via-background/60 to-background/90" />
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,theme(colors.primary/10),transparent_60%)]" />
         <div className="mx-auto max-w-7xl px-6 py-24 md:py-32 text-center">
           <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs text-muted-foreground shadow-sm">

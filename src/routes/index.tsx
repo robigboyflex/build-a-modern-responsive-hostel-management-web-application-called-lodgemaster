@@ -10,6 +10,7 @@ import {
   CheckCircle2,
   ArrowRight,
 } from "lucide-react";
+import heroBg from "@/assets/hero-bg.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({

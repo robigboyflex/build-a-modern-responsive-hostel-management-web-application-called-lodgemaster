@@ -26,7 +26,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [roles, setRoles] = useState<Role[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!AUTH_DISABLED);
+  const [devRole, setDevRoleState] = useState<DevRole>("student");
 
   const loadRoles = async (uid: string) => {
     const { data } = await supabase.from("user_roles").select("role").eq("user_id", uid);
@@ -34,6 +35,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
+    if (AUTH_DISABLED) {
+      setDevRoleState(getDevRole());
+      setLoading(false);
+      return;
+    }
     const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => {
       setSession(s);
       setUser(s?.user ?? null);
@@ -60,6 +66,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (user) await loadRoles(user.id);
   };
 
+  const changeDevRole = (role: DevRole) => {
+    setDevRole(role);
+    setDevRoleState(role);
+  };
+
+  const isManager = AUTH_DISABLED
+    ? devRole === "manager"
+    : roles.includes("manager") || roles.includes("admin");
+  const isNss = AUTH_DISABLED ? devRole === "nss" : roles.includes("nss");
+
   return (
     <AuthContext.Provider
       value={{
@@ -67,9 +83,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         session,
         roles,
         loading,
-        isManager: roles.includes("manager") || roles.includes("admin"),
-        isNss: roles.includes("nss"),
-        isReviewer: roles.includes("nss") || roles.includes("manager") || roles.includes("admin"),
+        isManager,
+        isNss,
+        isReviewer: isManager || isNss,
+        authDisabled: AUTH_DISABLED,
+        devRole,
+        changeDevRole,
         signOut,
         refreshRoles,
       }}

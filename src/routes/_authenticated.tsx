@@ -1,6 +1,7 @@
 import { createFileRoute, Outlet, useNavigate, Link, useRouterState } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useAuth } from "@/lib/auth-context";
+import type { DevRole } from "@/lib/auth-flags";
 import {
   SidebarProvider,
   Sidebar,
@@ -28,14 +29,14 @@ export const Route = createFileRoute("/_authenticated")({
 });
 
 function AuthLayout() {
-  const { user, loading, isManager, isNss, signOut } = useAuth();
+  const { user, loading, isManager, isNss, signOut, authDisabled, devRole, changeDevRole } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loading && !user) navigate({ to: "/auth" });
-  }, [loading, user, navigate]);
+    if (!authDisabled && !loading && !user) navigate({ to: "/auth" });
+  }, [authDisabled, loading, user, navigate]);
 
-  if (loading || !user) {
+  if (!authDisabled && (loading || !user)) {
     return (
       <div className="min-h-screen grid place-items-center">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
@@ -43,17 +44,27 @@ function AuthLayout() {
     );
   }
 
+  const email = user?.email ?? (authDisabled ? "preview mode" : "");
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-background">
-        <AppSidebar isManager={isManager} isNss={isNss} onSignOut={async () => { await signOut(); navigate({ to: "/auth" }); }} email={user.email ?? ""} />
+        <AppSidebar
+          isManager={isManager}
+          isNss={isNss}
+          onSignOut={async () => { await signOut(); navigate({ to: "/auth" }); }}
+          email={email}
+          authDisabled={authDisabled}
+          devRole={devRole}
+          changeDevRole={changeDevRole}
+        />
         <div className="flex-1 flex flex-col min-w-0">
           <header className="h-14 border-b border-border bg-card/60 backdrop-blur flex items-center px-4 gap-2 sticky top-0 z-30">
             <SidebarTrigger />
             <div className="ml-auto flex items-center gap-2">
               <NotificationsBell />
               <Link to="/profile">
-                <Avatar className="h-8 w-8"><AvatarFallback className="bg-primary text-primary-foreground text-xs">{(user.email ?? "?").slice(0, 2).toUpperCase()}</AvatarFallback></Avatar>
+                <Avatar className="h-8 w-8"><AvatarFallback className="bg-primary text-primary-foreground text-xs">{email.slice(0, 2).toUpperCase()}</AvatarFallback></Avatar>
               </Link>
             </div>
           </header>
@@ -64,7 +75,7 @@ function AuthLayout() {
   );
 }
 
-function AppSidebar({ isManager, isNss, onSignOut, email }: { isManager: boolean; isNss: boolean; onSignOut: () => void; email: string }) {
+function AppSidebar({ isManager, isNss, onSignOut, email, authDisabled, devRole, changeDevRole }: { isManager: boolean; isNss: boolean; onSignOut: () => void; email: string; authDisabled: boolean; devRole: DevRole; changeDevRole: (role: DevRole) => void }) {
   const path = useRouterState({ select: (r) => r.location.pathname });
   const studentItems = [
     { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
@@ -126,9 +137,32 @@ function AppSidebar({ isManager, isNss, onSignOut, email }: { isManager: boolean
       </SidebarContent>
       <SidebarFooter className="border-t border-sidebar-border">
         <div className="px-2 py-2 text-xs text-muted-foreground truncate group-data-[collapsible=icon]:hidden">{email}</div>
-        <Button variant="ghost" size="sm" className="justify-start" onClick={onSignOut}>
-          <LogOut className="h-4 w-4 mr-2"/> <span className="group-data-[collapsible=icon]:hidden">Sign out</span>
-        </Button>
+        {authDisabled ? (
+          <div className="px-2 pb-2 space-y-1.5 group-data-[collapsible=icon]:hidden">
+            <div className="text-[11px] uppercase tracking-wide text-muted-foreground">Preview role</div>
+            <div className="grid grid-cols-3 gap-1">
+              {([
+                { key: "student", label: "Student" },
+                { key: "nss", label: "NSS" },
+                { key: "manager", label: "Manager" },
+              ] as { key: DevRole; label: string }[]).map((r) => (
+                <Button
+                  key={r.key}
+                  size="sm"
+                  variant={devRole === r.key ? "default" : "outline"}
+                  className="h-7 px-1 text-[11px]"
+                  onClick={() => changeDevRole(r.key)}
+                >
+                  {r.label}
+                </Button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <Button variant="ghost" size="sm" className="justify-start" onClick={onSignOut}>
+            <LogOut className="h-4 w-4 mr-2"/> <span className="group-data-[collapsible=icon]:hidden">Sign out</span>
+          </Button>
+        )}
       </SidebarFooter>
     </Sidebar>
   );

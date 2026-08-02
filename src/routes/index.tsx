@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { AUTH_DISABLED } from "@/lib/auth-flags";
 import {
   Building2,
   UserPlus,
@@ -59,8 +60,17 @@ function Landing() {
             <a href="#contact" className="hover:text-foreground transition">Contact</a>
           </nav>
           <div className="flex items-center gap-2">
-            <Link to="/auth"><Button variant="ghost" size="sm">Login</Button></Link>
-            <Link to="/auth" search={{ mode: "register" as const }}><Button size="sm">Get started</Button></Link>
+            {AUTH_DISABLED ? (
+              <>
+                <Link to="/dashboard"><Button variant="ghost" size="sm">Dashboard</Button></Link>
+                <Link to="/dashboard"><Button size="sm">Get started</Button></Link>
+              </>
+            ) : (
+              <>
+                <Link to="/auth"><Button variant="ghost" size="sm">Login</Button></Link>
+                <Link to="/auth" search={{ mode: "register" as const }}><Button size="sm">Get started</Button></Link>
+              </>
+            )}
           </div>
         </div>
       </header>
@@ -88,14 +98,29 @@ function Landing() {
             Book your hostel room, upload payment proof and complete your accommodation registration online.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
-            <Link to="/auth" search={{ mode: "register" as const }}>
-              <Button size="lg" className="rounded-xl shadow-elegant">
-                Book a Room <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-            <Link to="/auth">
-              <Button size="lg" variant="outline" className="rounded-xl">Login</Button>
-            </Link>
+            {AUTH_DISABLED ? (
+              <>
+                <Link to="/book">
+                  <Button size="lg" className="rounded-xl shadow-elegant">
+                    Book a Room <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+                <Link to="/dashboard">
+                  <Button size="lg" variant="outline" className="rounded-xl">Go to dashboard</Button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/auth" search={{ mode: "register" as const }}>
+                  <Button size="lg" className="rounded-xl shadow-elegant">
+                    Book a Room <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+                <Link to="/auth">
+                  <Button size="lg" variant="outline" className="rounded-xl">Login</Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -146,10 +171,16 @@ function Landing() {
       <section className="mx-auto max-w-4xl px-6 py-24 text-center">
         <CheckCircle2 className="mx-auto h-10 w-10 text-primary" />
         <h2 className="mt-4 text-3xl md:text-4xl font-bold">Ready to secure your accommodation?</h2>
-        <p className="mt-3 text-muted-foreground">Create your account today and start your booking journey.</p>
-        <Link to="/auth" search={{ mode: "register" as const }} className="inline-block mt-8">
-          <Button size="lg" className="rounded-xl shadow-elegant">Create free account</Button>
-        </Link>
+        <p className="mt-3 text-muted-foreground">Start your booking journey in a few clicks.</p>
+        {AUTH_DISABLED ? (
+          <Link to="/book" className="inline-block mt-8">
+            <Button size="lg" className="rounded-xl shadow-elegant">Start booking</Button>
+          </Link>
+        ) : (
+          <Link to="/auth" search={{ mode: "register" as const }} className="inline-block mt-8">
+            <Button size="lg" className="rounded-xl shadow-elegant">Create free account</Button>
+          </Link>
+        )}
       </section>
 
       {/* Footer */}

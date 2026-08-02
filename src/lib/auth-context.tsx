@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import type { Session, User } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
+import { AUTH_DISABLED, getDevRole, setDevRole, type DevRole } from "@/lib/auth-flags";
 
 type Role = "student" | "nss" | "manager" | "admin";
 

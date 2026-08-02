@@ -13,6 +13,9 @@ interface AuthContextValue {
   isManager: boolean;
   isNss: boolean;
   isReviewer: boolean;
+  authDisabled: boolean;
+  devRole: DevRole;
+  changeDevRole: (role: DevRole) => void;
   signOut: () => Promise<void>;
   refreshRoles: () => Promise<void>;
 }

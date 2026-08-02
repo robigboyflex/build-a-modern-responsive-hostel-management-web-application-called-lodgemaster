@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { AUTH_DISABLED } from "@/lib/auth-flags";
 import {
   Building2,
   UserPlus,

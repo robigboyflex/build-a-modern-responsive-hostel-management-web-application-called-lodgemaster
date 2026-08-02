@@ -171,10 +171,16 @@ function Landing() {
       <section className="mx-auto max-w-4xl px-6 py-24 text-center">
         <CheckCircle2 className="mx-auto h-10 w-10 text-primary" />
         <h2 className="mt-4 text-3xl md:text-4xl font-bold">Ready to secure your accommodation?</h2>
-        <p className="mt-3 text-muted-foreground">Create your account today and start your booking journey.</p>
-        <Link to="/auth" search={{ mode: "register" as const }} className="inline-block mt-8">
-          <Button size="lg" className="rounded-xl shadow-elegant">Create free account</Button>
-        </Link>
+        <p className="mt-3 text-muted-foreground">Start your booking journey in a few clicks.</p>
+        {AUTH_DISABLED ? (
+          <Link to="/book" className="inline-block mt-8">
+            <Button size="lg" className="rounded-xl shadow-elegant">Start booking</Button>
+          </Link>
+        ) : (
+          <Link to="/auth" search={{ mode: "register" as const }} className="inline-block mt-8">
+            <Button size="lg" className="rounded-xl shadow-elegant">Create free account</Button>
+          </Link>
+        )}
       </section>
 
       {/* Footer */}

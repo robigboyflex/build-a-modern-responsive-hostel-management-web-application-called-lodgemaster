@@ -98,14 +98,29 @@ function Landing() {
             Book your hostel room, upload payment proof and complete your accommodation registration online.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-3">
-            <Link to="/auth" search={{ mode: "register" as const }}>
-              <Button size="lg" className="rounded-xl shadow-elegant">
-                Book a Room <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-            <Link to="/auth">
-              <Button size="lg" variant="outline" className="rounded-xl">Login</Button>
-            </Link>
+            {AUTH_DISABLED ? (
+              <>
+                <Link to="/book">
+                  <Button size="lg" className="rounded-xl shadow-elegant">
+                    Book a Room <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+                <Link to="/dashboard">
+                  <Button size="lg" variant="outline" className="rounded-xl">Go to dashboard</Button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/auth" search={{ mode: "register" as const }}>
+                  <Button size="lg" className="rounded-xl shadow-elegant">
+                    Book a Room <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+                <Link to="/auth">
+                  <Button size="lg" variant="outline" className="rounded-xl">Login</Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </section>

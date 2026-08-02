@@ -74,7 +74,7 @@ function AuthLayout() {
   );
 }
 
-function AppSidebar({ isManager, isNss, onSignOut, email }: { isManager: boolean; isNss: boolean; onSignOut: () => void; email: string }) {
+function AppSidebar({ isManager, isNss, onSignOut, email, authDisabled, devRole, changeDevRole }: { isManager: boolean; isNss: boolean; onSignOut: () => void; email: string; authDisabled: boolean; devRole: DevRole; changeDevRole: (role: DevRole) => void }) {
   const path = useRouterState({ select: (r) => r.location.pathname });
   const studentItems = [
     { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },

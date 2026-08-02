@@ -59,8 +59,17 @@ function Landing() {
             <a href="#contact" className="hover:text-foreground transition">Contact</a>
           </nav>
           <div className="flex items-center gap-2">
-            <Link to="/auth"><Button variant="ghost" size="sm">Login</Button></Link>
-            <Link to="/auth" search={{ mode: "register" as const }}><Button size="sm">Get started</Button></Link>
+            {AUTH_DISABLED ? (
+              <>
+                <Link to="/dashboard"><Button variant="ghost" size="sm">Dashboard</Button></Link>
+                <Link to="/dashboard"><Button size="sm">Get started</Button></Link>
+              </>
+            ) : (
+              <>
+                <Link to="/auth"><Button variant="ghost" size="sm">Login</Button></Link>
+                <Link to="/auth" search={{ mode: "register" as const }}><Button size="sm">Get started</Button></Link>
+              </>
+            )}
           </div>
         </div>
       </header>

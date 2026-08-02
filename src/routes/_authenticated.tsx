@@ -28,14 +28,14 @@ export const Route = createFileRoute("/_authenticated")({
 });
 
 function AuthLayout() {
-  const { user, loading, isManager, isNss, signOut } = useAuth();
+  const { user, loading, isManager, isNss, signOut, authDisabled, devRole, changeDevRole } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!loading && !user) navigate({ to: "/auth" });
-  }, [loading, user, navigate]);
+    if (!authDisabled && !loading && !user) navigate({ to: "/auth" });
+  }, [authDisabled, loading, user, navigate]);
 
-  if (loading || !user) {
+  if (!authDisabled && (loading || !user)) {
     return (
       <div className="min-h-screen grid place-items-center">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
@@ -43,17 +43,27 @@ function AuthLayout() {
     );
   }
 
+  const email = user?.email ?? (authDisabled ? "preview mode" : "");
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-background">
-        <AppSidebar isManager={isManager} isNss={isNss} onSignOut={async () => { await signOut(); navigate({ to: "/auth" }); }} email={user.email ?? ""} />
+        <AppSidebar
+          isManager={isManager}
+          isNss={isNss}
+          onSignOut={async () => { await signOut(); navigate({ to: "/auth" }); }}
+          email={email}
+          authDisabled={authDisabled}
+          devRole={devRole}
+          changeDevRole={changeDevRole}
+        />
         <div className="flex-1 flex flex-col min-w-0">
           <header className="h-14 border-b border-border bg-card/60 backdrop-blur flex items-center px-4 gap-2 sticky top-0 z-30">
             <SidebarTrigger />
             <div className="ml-auto flex items-center gap-2">
               <NotificationsBell />
               <Link to="/profile">
-                <Avatar className="h-8 w-8"><AvatarFallback className="bg-primary text-primary-foreground text-xs">{(user.email ?? "?").slice(0, 2).toUpperCase()}</AvatarFallback></Avatar>
+                <Avatar className="h-8 w-8"><AvatarFallback className="bg-primary text-primary-foreground text-xs">{email.slice(0, 2).toUpperCase()}</AvatarFallback></Avatar>
               </Link>
             </div>
           </header>

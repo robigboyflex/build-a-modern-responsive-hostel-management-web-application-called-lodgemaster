@@ -1,6 +1,7 @@
 import { createFileRoute, Outlet, useNavigate, Link, useRouterState } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useAuth } from "@/lib/auth-context";
+import type { DevRole } from "@/lib/auth-flags";
 import {
   SidebarProvider,
   Sidebar,

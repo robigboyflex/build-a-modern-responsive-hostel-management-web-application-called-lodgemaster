@@ -32,6 +32,7 @@ import { Route as AuthenticatedManagerFloorsRouteImport } from './routes/_authen
 import { Route as AuthenticatedManagerBlocksRouteImport } from './routes/_authenticated.manager.blocks'
 import { Route as AuthenticatedManagerApplicationsRouteImport } from './routes/_authenticated.manager.applications'
 import { Route as AuthenticatedManagerAnnouncementsRouteImport } from './routes/_authenticated.manager.announcements'
+import { Route as AuthenticatedAdminManagersRouteImport } from './routes/_authenticated.admin.managers'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -158,6 +159,12 @@ const AuthenticatedManagerAnnouncementsRoute =
     path: '/announcements',
     getParentRoute: () => AuthenticatedManagerRoute,
   } as any)
+const AuthenticatedAdminManagersRoute =
+  AuthenticatedAdminManagersRouteImport.update({
+    id: '/admin/managers',
+    path: '/admin/managers',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -173,6 +180,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof AuthenticatedProfileRoute
   '/registration': typeof AuthenticatedRegistrationRoute
   '/select-room': typeof AuthenticatedSelectRoomRoute
+  '/admin/managers': typeof AuthenticatedAdminManagersRoute
   '/manager/announcements': typeof AuthenticatedManagerAnnouncementsRoute
   '/manager/applications': typeof AuthenticatedManagerApplicationsRoute
   '/manager/blocks': typeof AuthenticatedManagerBlocksRoute
@@ -197,6 +205,7 @@ export interface FileRoutesByTo {
   '/profile': typeof AuthenticatedProfileRoute
   '/registration': typeof AuthenticatedRegistrationRoute
   '/select-room': typeof AuthenticatedSelectRoomRoute
+  '/admin/managers': typeof AuthenticatedAdminManagersRoute
   '/manager/announcements': typeof AuthenticatedManagerAnnouncementsRoute
   '/manager/applications': typeof AuthenticatedManagerApplicationsRoute
   '/manager/blocks': typeof AuthenticatedManagerBlocksRoute
@@ -223,6 +232,7 @@ export interface FileRoutesById {
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/registration': typeof AuthenticatedRegistrationRoute
   '/_authenticated/select-room': typeof AuthenticatedSelectRoomRoute
+  '/_authenticated/admin/managers': typeof AuthenticatedAdminManagersRoute
   '/_authenticated/manager/announcements': typeof AuthenticatedManagerAnnouncementsRoute
   '/_authenticated/manager/applications': typeof AuthenticatedManagerApplicationsRoute
   '/_authenticated/manager/blocks': typeof AuthenticatedManagerBlocksRoute
@@ -249,6 +259,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/registration'
     | '/select-room'
+    | '/admin/managers'
     | '/manager/announcements'
     | '/manager/applications'
     | '/manager/blocks'
@@ -273,6 +284,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/registration'
     | '/select-room'
+    | '/admin/managers'
     | '/manager/announcements'
     | '/manager/applications'
     | '/manager/blocks'
@@ -298,6 +310,7 @@ export interface FileRouteTypes {
     | '/_authenticated/profile'
     | '/_authenticated/registration'
     | '/_authenticated/select-room'
+    | '/_authenticated/admin/managers'
     | '/_authenticated/manager/announcements'
     | '/_authenticated/manager/applications'
     | '/_authenticated/manager/blocks'
@@ -479,6 +492,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedManagerAnnouncementsRouteImport
       parentRoute: typeof AuthenticatedManagerRoute
     }
+    '/_authenticated/admin/managers': {
+      id: '/_authenticated/admin/managers'
+      path: '/admin/managers'
+      fullPath: '/admin/managers'
+      preLoaderRoute: typeof AuthenticatedAdminManagersRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
@@ -530,6 +550,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedRegistrationRoute: typeof AuthenticatedRegistrationRoute
   AuthenticatedSelectRoomRoute: typeof AuthenticatedSelectRoomRoute
+  AuthenticatedAdminManagersRoute: typeof AuthenticatedAdminManagersRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
@@ -543,6 +564,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedRegistrationRoute: AuthenticatedRegistrationRoute,
   AuthenticatedSelectRoomRoute: AuthenticatedSelectRoomRoute,
+  AuthenticatedAdminManagersRoute: AuthenticatedAdminManagersRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

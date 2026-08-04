@@ -19,7 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import {
   Building2, LayoutDashboard, BookMarked, FileText, FolderOpen, Megaphone, User,
-  ClipboardList, Users, DoorOpen, Layers, Boxes, BedDouble, Settings, LogOut,
+  ClipboardList, Users, DoorOpen, Layers, Boxes, BedDouble, Settings, LogOut, ShieldCheck,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { NotificationsBell } from "@/components/notifications-bell";
@@ -29,7 +29,7 @@ export const Route = createFileRoute("/_authenticated")({
 });
 
 function AuthLayout() {
-  const { user, loading, isManager, isNss, signOut, authDisabled, devRole, changeDevRole } = useAuth();
+  const { user, loading, isManager, isNss, roles, signOut, authDisabled, devRole, changeDevRole } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,6 +52,7 @@ function AuthLayout() {
         <AppSidebar
           isManager={isManager}
           isNss={isNss}
+          isAdmin={roles.includes("admin")}
           onSignOut={async () => { await signOut(); navigate({ to: "/auth" }); }}
           email={email}
           authDisabled={authDisabled}
@@ -75,7 +76,7 @@ function AuthLayout() {
   );
 }
 
-function AppSidebar({ isManager, isNss, onSignOut, email, authDisabled, devRole, changeDevRole }: { isManager: boolean; isNss: boolean; onSignOut: () => void; email: string; authDisabled: boolean; devRole: DevRole; changeDevRole: (role: DevRole) => void }) {
+function AppSidebar({ isManager, isNss, isAdmin, onSignOut, email, authDisabled, devRole, changeDevRole }: { isManager: boolean; isNss: boolean; isAdmin: boolean; onSignOut: () => void; email: string; authDisabled: boolean; devRole: DevRole; changeDevRole: (role: DevRole) => void }) {
   const path = useRouterState({ select: (r) => r.location.pathname });
   const studentItems = [
     { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
@@ -105,7 +106,10 @@ function AppSidebar({ isManager, isNss, onSignOut, email, authDisabled, devRole,
     { title: "Announcements", url: "/manager/announcements", icon: Megaphone },
     { title: "Settings", url: "/manager/settings", icon: Settings },
   ];
-  const items = isManager ? managerItems : isNss ? nssItems : studentItems;
+  const base = isManager ? managerItems : isNss ? nssItems : studentItems;
+  const items = isAdmin
+    ? [...base, { title: "Manager Accounts", url: "/admin/managers", icon: ShieldCheck }]
+    : base;
   const label = isManager ? "Manager" : isNss ? "NSS Reviewer" : "Student";
 
   return (

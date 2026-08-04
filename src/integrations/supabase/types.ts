@@ -438,7 +438,7 @@ export type Database = {
       process_booking_deadlines: { Args: never; Returns: undefined }
     }
     Enums: {
-      account_type: "student" | "nss"
+      account_type: "student" | "nss" | "manager" | "admin"
       app_role: "student" | "nss" | "manager" | "admin"
       booking_status:
         | "draft"
@@ -578,7 +578,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      account_type: ["student", "nss"],
+      account_type: ["student", "nss", "manager", "admin"],
       app_role: ["student", "nss", "manager", "admin"],
       booking_status: [
         "draft",

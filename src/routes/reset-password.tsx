@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { BackButton } from "@/components/back-button";
 
 export const Route = createFileRoute("/reset-password")({
   head: () => ({
@@ -31,7 +32,10 @@ function ResetPassword() {
   };
 
   return (
-    <div className="min-h-screen grid place-items-center px-4 bg-background">
+    <div className="min-h-screen grid place-items-center px-4 bg-background relative">
+      <div className="absolute top-4 left-4">
+        <BackButton />
+      </div>
       <Card className="w-full max-w-md border-border/60">
         <CardHeader>
           <CardTitle>Set a new password</CardTitle>

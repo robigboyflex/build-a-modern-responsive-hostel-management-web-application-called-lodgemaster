@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { NotificationsBell } from "@/components/notifications-bell";
+import { BackButton } from "@/components/back-button";
 
 export const Route = createFileRoute("/_authenticated")({
   component: AuthLayout,
@@ -62,6 +63,7 @@ function AuthLayout() {
         <div className="flex-1 flex flex-col min-w-0">
           <header className="h-14 border-b border-border bg-card/60 backdrop-blur flex items-center px-4 gap-2 sticky top-0 z-30">
             <SidebarTrigger />
+            <BackButton />
             <div className="ml-auto flex items-center gap-2">
               <NotificationsBell />
               <Link to="/profile">

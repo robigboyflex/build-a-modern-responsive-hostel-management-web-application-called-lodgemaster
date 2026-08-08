@@ -62,7 +62,7 @@ function Landing() {
           <div className="flex items-center gap-2">
             {AUTH_DISABLED ? (
               <>
-                <Link to="/dashboard"><Button variant="ghost" size="sm">Dashboard</Button></Link>
+                <Link to="/auth"><Button variant="ghost" size="sm">Login</Button></Link>
                 <Link to="/dashboard"><Button size="sm">Get started</Button></Link>
               </>
             ) : (
@@ -105,8 +105,8 @@ function Landing() {
                     Book a Room <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
-                <Link to="/dashboard">
-                  <Button size="lg" variant="outline" className="rounded-xl">Go to dashboard</Button>
+                <Link to="/auth">
+                  <Button size="lg" variant="outline" className="rounded-xl">Login</Button>
                 </Link>
               </>
             ) : (

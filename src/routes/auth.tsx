@@ -11,6 +11,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useAuth } from "@/lib/auth-context";
 import { useEffect } from "react";
+import { BackButton } from "@/components/back-button";
 
 const searchSchema = z.object({
   mode: z.enum(["login", "register", "forgot"]).optional(),
@@ -38,7 +39,10 @@ function AuthPage() {
   }, [loading, user, navigate]);
 
   return (
-    <div className="min-h-screen grid lg:grid-cols-2 bg-background">
+    <div className="min-h-screen grid lg:grid-cols-2 bg-background relative">
+      <div className="absolute top-4 left-4 z-20">
+        <BackButton />
+      </div>
       <div className="hidden lg:flex flex-col justify-between p-12 bg-gradient-to-br from-primary via-primary to-primary/70 text-primary-foreground relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_20%_20%,white,transparent_50%)]" />
         <Link to="/" className="relative flex items-center gap-2 font-semibold text-lg">

@@ -8,8 +8,8 @@ import {
   Receipt,
   BedDouble,
   ClipboardCheck,
-  CheckCircle2,
   ArrowRight,
+  ArrowUpRight,
 } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 
@@ -43,123 +43,136 @@ const steps = [
 ];
 
 function Landing() {
+  const primaryCta = AUTH_DISABLED
+    ? { to: "/book" as const, search: undefined }
+    : { to: "/auth" as const, search: { mode: "register" as const } };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Nav */}
-      <header className="border-b border-border/60 bg-background/80 backdrop-blur sticky top-0 z-40">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link to="/" className="flex items-center gap-2 font-semibold text-lg">
-            <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground shadow-elegant">
-              <Building2 className="h-5 w-5" />
+      <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3.5">
+          <Link to="/" className="flex items-center gap-2.5 font-display text-lg font-bold tracking-tight">
+            <div className="grid h-9 w-9 place-items-center rounded-xl bg-navy text-navy-foreground">
+              <Building2 className="h-4.5 w-4.5" />
             </div>
             LodgeMaster
           </Link>
-          <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
-            <a href="#features" className="hover:text-foreground transition">Features</a>
-            <a href="#how" className="hover:text-foreground transition">How it works</a>
-            <a href="#contact" className="hover:text-foreground transition">Contact</a>
+          <nav className="hidden items-center gap-7 text-sm text-muted-foreground md:flex">
+            <a href="#features" className="transition hover:text-foreground">Features</a>
+            <a href="#how" className="transition hover:text-foreground">How it works</a>
+            <a href="#contact" className="transition hover:text-foreground">Contact</a>
           </nav>
           <div className="flex items-center gap-2">
-            {AUTH_DISABLED ? (
-              <>
-                <Link to="/auth"><Button variant="ghost" size="sm">Login</Button></Link>
-                <Link to="/dashboard"><Button size="sm">Get started</Button></Link>
-              </>
-            ) : (
-              <>
-                <Link to="/auth"><Button variant="ghost" size="sm">Login</Button></Link>
-                <Link to="/auth" search={{ mode: "register" as const }}><Button size="sm">Get started</Button></Link>
-              </>
-            )}
+            <Link to="/auth"><Button variant="ghost" size="sm">Login</Button></Link>
+            <Link {...(primaryCta as any)}>
+              <Button size="sm" className="rounded-full px-4">Get started</Button>
+            </Link>
           </div>
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <img
-          src={heroBg}
-          alt=""
-          aria-hidden="true"
-          width={1920}
-          height={1088}
-          className="absolute inset-0 -z-10 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background/80 via-background/60 to-background/90" />
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,theme(colors.primary/10),transparent_60%)]" />
-        <div className="mx-auto max-w-7xl px-6 py-24 md:py-32 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs text-muted-foreground shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse" /> Trusted by universities & NSS personnel
+      {/* Hero — bento */}
+      <section className="mx-auto max-w-7xl px-5 pt-8 pb-6 md:pt-12">
+        <div className="grid gap-4 lg:grid-cols-12 lg:grid-rows-2">
+          {/* Headline tile */}
+          <div className="bento-tile lg:col-span-7 lg:row-span-2 bg-navy text-navy-foreground p-8 md:p-12 flex flex-col justify-between">
+            <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-primary/35 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-28 -left-16 h-64 w-64 rounded-full bg-amber/25 blur-3xl" />
+            <div className="relative">
+              <span className="inline-flex items-center gap-2 rounded-full border border-navy-foreground/20 bg-navy-foreground/10 px-3 py-1 text-xs font-medium">
+                <span className="h-1.5 w-1.5 rounded-full bg-amber" />
+                Trusted by universities &amp; NSS personnel
+              </span>
+              <h1 className="mt-7 font-display text-4xl leading-[1.02] font-extrabold tracking-tight sm:text-5xl md:text-6xl">
+                Find and Book Your{" "}
+                <span className="text-amber">Hostel Room</span> Easily
+              </h1>
+              <p className="mt-5 max-w-xl text-base text-navy-foreground/75 md:text-lg">
+                Book your hostel room, upload payment proof and complete your accommodation registration online.
+              </p>
+            </div>
+            <div className="relative mt-10 flex flex-wrap gap-3">
+              <Link {...(primaryCta as any)}>
+                <Button size="lg" className="rounded-full bg-amber text-amber-foreground hover:bg-amber/90">
+                  Book a Room <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
+              <Link to="/auth">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="rounded-full border-navy-foreground/30 bg-transparent text-navy-foreground hover:bg-navy-foreground/10 hover:text-navy-foreground"
+                >
+                  Login
+                </Button>
+              </Link>
+            </div>
           </div>
-          <h1 className="mt-6 text-5xl md:text-7xl font-bold tracking-tight text-foreground">
-            Find and Book Your <span className="text-primary">Hostel Room</span> Easily
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-            Book your hostel room, upload payment proof and complete your accommodation registration online.
-          </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-3">
-            {AUTH_DISABLED ? (
-              <>
-                <Link to="/book">
-                  <Button size="lg" className="rounded-xl shadow-elegant">
-                    Book a Room <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-                <Link to="/auth">
-                  <Button size="lg" variant="outline" className="rounded-xl">Login</Button>
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link to="/auth" search={{ mode: "register" as const }}>
-                  <Button size="lg" className="rounded-xl shadow-elegant">
-                    Book a Room <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-                <Link to="/auth">
-                  <Button size="lg" variant="outline" className="rounded-xl">Login</Button>
-                </Link>
-              </>
-            )}
+
+          {/* Image tile */}
+          <div className="bento-tile lg:col-span-5 min-h-[220px]">
+            <img
+              src={heroBg}
+              alt="Modern student hostel building on campus"
+              width={1920}
+              height={1088}
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy/70 to-transparent" />
+            <div className="absolute bottom-5 left-5 text-navy-foreground">
+              <div className="font-display text-sm font-semibold">Real-time availability</div>
+              <div className="text-xs text-navy-foreground/70">Rooms, blocks and floors, live</div>
+            </div>
+          </div>
+
+          {/* Stats tiles */}
+          <div className="grid content-start items-start gap-4 sm:grid-cols-2 lg:col-span-5">
+            <StatTile value="6 steps" label="From account to keys" tone="sand" />
+            <StatTile value="10 MB" label="Per document upload" tone="card" />
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section id="features" className="mx-auto max-w-7xl px-6 py-20">
-        <div className="text-center mb-14">
-          <h2 className="text-3xl md:text-4xl font-bold">Everything you need in one place</h2>
-          <p className="mt-3 text-muted-foreground">Built for students, NSS personnel and hostel managers.</p>
+      {/* Features — bento */}
+      <section id="features" className="mx-auto max-w-7xl px-5 py-16 md:py-20">
+        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+          <h2 className="max-w-xl font-display text-3xl font-bold md:text-4xl">Everything you need in one place</h2>
+          <p className="text-muted-foreground">Built for students, NSS personnel and hostel managers.</p>
         </div>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map((f) => (
-            <div key={f.title} className="group rounded-2xl border border-border bg-card p-6 shadow-card hover:shadow-elegant transition-all hover:-translate-y-1">
+
+        <div className="mt-10 grid gap-4 md:grid-cols-6">
+          {features.map((f, i) => (
+            <article
+              key={f.title}
+              className={`bento-tile p-6 md:p-7 ${i === 0 ? "md:col-span-3 bg-sand" : i === 1 ? "md:col-span-3" : "md:col-span-2"}`}
+            >
               <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary-soft text-primary">
                 <f.icon className="h-5 w-5" />
               </div>
-              <h3 className="mt-5 text-lg font-semibold">{f.title}</h3>
+              <h3 className="mt-5 font-display text-lg font-semibold">{f.title}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{f.desc}</p>
-            </div>
+            </article>
           ))}
         </div>
       </section>
 
       {/* How it works */}
-      <section id="how" className="bg-primary-soft/40 border-y border-border">
-        <div className="mx-auto max-w-7xl px-6 py-20">
-          <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-bold">How it works</h2>
-            <p className="mt-3 text-muted-foreground">Six simple steps from account to keys.</p>
+      <section id="how" className="border-y border-border bg-sand/60">
+        <div className="mx-auto max-w-7xl px-5 py-16 md:py-20">
+          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <h2 className="font-display text-3xl font-bold md:text-4xl">How it works</h2>
+            <p className="text-muted-foreground">Six simple steps from account to keys.</p>
           </div>
-          <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {steps.map((s, i) => (
-              <li key={s} className="flex items-start gap-4 rounded-2xl bg-card border border-border p-5 shadow-card">
-                <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground font-semibold">
-                  {i + 1}
+              <li key={s} className="bento-tile flex items-center gap-4 p-5">
+                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-navy font-display text-sm font-bold text-navy-foreground">
+                  {String(i + 1).padStart(2, "0")}
                 </div>
                 <div>
-                  <div className="text-xs uppercase tracking-wider text-muted-foreground">Step {i + 1}</div>
-                  <div className="font-semibold mt-0.5">{s}</div>
+                  <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Step {i + 1}</div>
+                  <div className="mt-0.5 font-display font-semibold">{s}</div>
                 </div>
               </li>
             ))}
@@ -168,26 +181,28 @@ function Landing() {
       </section>
 
       {/* CTA */}
-      <section className="mx-auto max-w-4xl px-6 py-24 text-center">
-        <CheckCircle2 className="mx-auto h-10 w-10 text-primary" />
-        <h2 className="mt-4 text-3xl md:text-4xl font-bold">Ready to secure your accommodation?</h2>
-        <p className="mt-3 text-muted-foreground">Start your booking journey in a few clicks.</p>
-        {AUTH_DISABLED ? (
-          <Link to="/book" className="inline-block mt-8">
-            <Button size="lg" className="rounded-xl shadow-elegant">Start booking</Button>
-          </Link>
-        ) : (
-          <Link to="/auth" search={{ mode: "register" as const }} className="inline-block mt-8">
-            <Button size="lg" className="rounded-xl shadow-elegant">Create free account</Button>
-          </Link>
-        )}
+      <section className="mx-auto max-w-7xl px-5 py-16 md:py-20">
+        <div className="bento-tile bg-navy p-9 text-navy-foreground md:p-14">
+          <div className="pointer-events-none absolute -right-20 -bottom-24 h-72 w-72 rounded-full bg-amber/20 blur-3xl" />
+          <div className="relative flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
+            <div>
+              <h2 className="font-display text-3xl font-bold md:text-4xl">Ready to secure your accommodation?</h2>
+              <p className="mt-3 text-navy-foreground/75">Start your booking journey in a few clicks.</p>
+            </div>
+            <Link {...(primaryCta as any)}>
+              <Button size="lg" className="rounded-full bg-amber text-amber-foreground hover:bg-amber/90">
+                Start booking <ArrowUpRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
       </section>
 
       {/* Footer */}
       <footer id="contact" className="border-t border-border bg-card">
-        <div className="mx-auto max-w-7xl px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-5 py-9 text-sm text-muted-foreground md:flex-row">
           <div className="flex items-center gap-2">
-            <div className="grid h-7 w-7 place-items-center rounded-md bg-primary text-primary-foreground">
+            <div className="grid h-7 w-7 place-items-center rounded-md bg-navy text-navy-foreground">
               <Building2 className="h-4 w-4" />
             </div>
             © {new Date().getFullYear()} LodgeMaster
@@ -199,6 +214,15 @@ function Landing() {
           </div>
         </div>
       </footer>
+    </div>
+  );
+}
+
+function StatTile({ value, label, tone }: { value: string; label: string; tone: "sand" | "card" }) {
+  return (
+    <div className={`bento-tile p-6 ${tone === "sand" ? "bg-sand" : ""}`}>
+      <div className="font-display text-3xl font-bold tracking-tight">{value}</div>
+      <div className="mt-2 text-sm text-muted-foreground">{label}</div>
     </div>
   );
 }

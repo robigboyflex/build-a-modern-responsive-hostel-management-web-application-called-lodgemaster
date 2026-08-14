@@ -52,7 +52,7 @@ function Landing() {
       {/* Nav */}
       <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-3.5">
-          <Link to="/" className="flex items-center gap-2.5 font-display text-lg font-700 tracking-tight">
+          <Link to="/" className="flex items-center gap-2.5 font-display text-lg font-bold tracking-tight">
             <div className="grid h-9 w-9 place-items-center rounded-xl bg-navy text-navy-foreground">
               <Building2 className="h-4.5 w-4.5" />
             </div>
@@ -127,7 +127,7 @@ function Landing() {
           </div>
 
           {/* Stats tiles */}
-          <div className="grid gap-4 sm:grid-cols-2 lg:col-span-5">
+          <div className="grid content-start items-start gap-4 sm:grid-cols-2 lg:col-span-5">
             <StatTile value="6 steps" label="From account to keys" tone="sand" />
             <StatTile value="10 MB" label="Per document upload" tone="card" />
           </div>
